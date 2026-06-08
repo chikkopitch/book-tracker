@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <h1>{{ book.title }}</h1>
+  <dl class="details">
+    <dt>Автор</dt><dd>{{ book.author }}</dd>
+    <dt>Жанр</dt><dd>{{ book.genre }}</dd>
+    <dt>Страницы</dt><dd>{{ book.pages }}</dd>
+    <dt>Статус</dt><dd>{{ status_options[book.status] }}</dd>
+    <dt>Оценка</dt><dd>{{ book.rating if book.rating is not none else '—' }}</dd>
+    <dt>Заметки</dt><dd>{{ book.notes or '—' }}</dd>
+  </dl>
+  <div class="actions">
+    <a class="button" href="{{ url_for('main.edit_book', book_id=book.id) }}">Редактировать</a>
+    <form method="post" action="{{ url_for('main.remove_book', book_id=book.id) }}" onsubmit="return confirm('Удалить книгу?');">
+      <button type="submit" class="danger">Удалить</button>
+    </form>
+  </div>
+</section>
+{% endblock %}
+

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <h1>{{ page_title }}</h1>
+  {% if errors %}
+    <div class="errors">
+      {% for error in errors %}
+        <p>{{ error }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+  <form method="post" class="form">
+    <label>Название
+      <input name="title" value="{{ form.title or '' }}" required>
+    </label>
+    <label>Автор
+      <input name="author" value="{{ form.author or '' }}" required>
+    </label>
+    <label>Жанр
+      <input name="genre" value="{{ form.genre or '' }}" required>
+    </label>
+    <label>Количество страниц
+      <input name="pages" type="number" min="1" value="{{ form.pages or '' }}" required>
+    </label>
+    <label>Статус
+      <select name="status">
+        {% for key, label in status_options.items() %}
+          <option value="{{ key }}" {% if (form.status or 'want') == key %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Оценка (1-5)
+      <input name="rating" type="number" min="1" max="5" value="{{ form.rating or '' }}">
+    </label>
+    <label>Заметки
+      <textarea name="notes" rows="5">{{ form.notes or '' }}</textarea>
+    </label>
+    <button type="submit">Сохранить</button>
+  </form>
+</section>
+{% endblock %}
+
